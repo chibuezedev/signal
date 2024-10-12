@@ -26,7 +26,7 @@ const Dashboard = () => {
 
   const handleJoinMeeting = (e) => {
     e.preventDefault();
-    // In a real application, you would validate the meeting ID here
+    // TODO: validate the meeting ID
     setInMeeting(true);
   };
 

@@ -1,13 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect } from "react";
-import { Route, Routes, Link, Navigate, useNavigate } from "react-router-dom";
-import {jwtDecode }from "jwt-decode";
+import { Route, Routes, Navigate, useNavigate } from "react-router-dom";
+import { jwtDecode } from "jwt-decode";
+import Narbar from "./components/navbar";
 
 import Login from "./components/login";
 import Register from "./components/signup";
 import Home from "./components/home";
 import Dashboard from "./components/dashboard";
-import Translator from "./components/translator";
+import Translator from "./pages/translator";
+import LearnSigns from "./pages/learnSign";
 
 const App = () => {
   const [user, setUser] = useState(null);
@@ -45,46 +47,7 @@ const App = () => {
 
   return (
     <div className="min-h-screen bg-gray-100">
-      <nav className="bg-white shadow-sm">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex justify-between h-16">
-            <div className="flex">
-              <Link to="/" className="flex-shrink-0 flex items-center">
-                Signa
-              </Link>
-            </div>
-            <div className="flex items-center">
-              {user ? (
-                <>
-                  <span className="mr-4">Welcome, {user.username}</span>
-                  <button
-                    onClick={logout}
-                    className="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-                  >
-                    Logout
-                  </button>
-                </>
-              ) : (
-                <>
-                  <Link
-                    to="/login"
-                    className="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-                  >
-                    Login
-                  </Link>
-                  <Link
-                    to="/register"
-                    className="ml-4 px-3 py-2 rounded-md text-sm font-medium text-gray-700 hover:text-gray-900 hover:bg-gray-50"
-                  >
-                    Register
-                  </Link>
-                </>
-              )}
-            </div>
-          </div>
-        </div>
-      </nav>
-
+      <Narbar user={user} logout={logout} />
       <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <Routes>
           <Route
@@ -93,14 +56,9 @@ const App = () => {
           />
           <Route path="/login" element={<Login login={login} />} />
           <Route path="/register" element={<Register />} />
-          <Route
-            path="/dashboard"
-            element={user ? <Dashboard /> : <Navigate to="/login" login={login}/>}
-          />
-          <Route
-            path="/translator"
-            element={user ? <Translator /> : <Navigate to="/login" login={login}/>}
-          />
+          <Route path="/join-call" element={<Dashboard />} />
+          <Route path="/translator" element={<Translator />} />
+          <Route path="/learn" element={<LearnSigns />} />
         </Routes>
       </div>
     </div>
